@@ -1,0 +1,4 @@
+# Xmake build files
+build/
+.cache/
+.xmake/
