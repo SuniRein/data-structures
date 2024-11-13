@@ -26,6 +26,17 @@ class BinomialHeap
 
     void      push(ValueType key);
     ValueType pop();
+    void      merge(BinomialHeap& other);
+
+    template<typename InputIt>
+    void assign(InputIt first, InputIt last)
+    {
+        clear();
+        while (first != last)
+        {
+            push(*first++);
+        }
+    }
 
     [[nodiscard]]
     ValueType const& top() const
@@ -46,19 +57,6 @@ class BinomialHeap
     }
 
     void clear();
-
-    void merge(BinomialHeap& other)
-    {
-        root_ = merge(root_, other.root_);
-        if (!min_ || (other.min_ && other.min_->key < min_->key))
-        {
-            min_ = other.min_;
-        }
-        size_       += other.size_;
-        other.root_  = nullptr;
-        other.min_   = nullptr;
-        other.size_  = 0;
-    }
 
   private:
     struct Node
@@ -291,4 +289,18 @@ void BinomialHeap<T>::push(ValueType key)
         min_ = node;
     }
     ++size_;
+}
+
+template<typename T>
+void BinomialHeap<T>::merge(BinomialHeap& other)
+{
+    root_ = merge(root_, other.root_);
+    if (!min_ || (other.min_ && other.min_->key < min_->key))
+    {
+        min_ = other.min_;
+    }
+    size_       += other.size_;
+    other.root_  = nullptr;
+    other.min_   = nullptr;
+    other.size_  = 0;
 }

@@ -1,4 +1,5 @@
 #include "binomial-heap.h"
+#include <vector>
 #include "gtest/gtest.h"
 
 TEST(BinomialHeap, Empty)
@@ -82,4 +83,18 @@ TEST(BinomialHeap, Merge)
     EXPECT_EQ(5, heap1.pop());
     EXPECT_EQ(6, heap1.pop());
     EXPECT_TRUE(heap2.empty());
+}
+
+TEST(BinomialHeap, Assign)
+{
+    std::vector<int>  vec{1, 2, 3, 4, 5};
+    BinomialHeap<int> heap;
+    heap.assign(vec.begin(), vec.end());
+    EXPECT_EQ(5, heap.size());
+    EXPECT_EQ(1, heap.pop());
+    EXPECT_EQ(2, heap.pop());
+    EXPECT_EQ(3, heap.pop());
+    EXPECT_EQ(4, heap.pop());
+    EXPECT_EQ(5, heap.pop());
+    EXPECT_TRUE(heap.empty());
 }
